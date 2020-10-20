@@ -5,9 +5,9 @@ from django.db import models
 class User(AbstractUser):
     email = models.EmailField()
     avatar = models.ImageField(upload_to="friendship/uploads/")
-    passions = models.ManyToManyField('Passion', related_name="passions")
-    bio = models.CharField(max_length=1000)
-    friends = models.ManyToManyField('self')
+    passions = models.ManyToManyField('Passion', related_name="passions", blank=True)
+    bio = models.CharField(max_length=1000, blank=True)
+    friends = models.ManyToManyField('self', blank=True)
 
 
 class Passion(models.Model):
