@@ -28,8 +28,17 @@
             </div>
 
             <div class="form-group">
-                <label for="avatar">Upload Your Avatar: </label>
+                <label for="avatar"><strong>Upload Your Avatar:</strong> </label>
                 <input type="file" name="avatar" id="avatar">
+            </div>
+            <p><strong>Select Your Passions:</strong> </p>
+            <div class="passions-container">
+                {% for passion in passions %}
+                    <div>
+                        <input type="checkbox" name="passion" value="{{passion.id}}" id="passion{{passion.id}}">
+                        <label for="passion{{passion.id}}">{{passion.name}}</label>
+                    </div>
+                {% endfor %}
             </div>
             <input class="btn btn-primary" type="submit" value="Register">
         </form>

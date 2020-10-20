@@ -45,7 +45,7 @@ def register(request):
         email = request.POST["email"]
         bio = request.POST["bio"]
         avatar = request.FILES['avatar']
-
+        passionIds = request.POST.getlist('passion')
         # Ensure password matches confirmation
         password = request.POST["password"]
         confirmation = request.POST["confirmation"]
@@ -59,6 +59,9 @@ def register(request):
             user = User.objects.create_user(username, email, password)
             user.bio = bio
             user.avatar = avatar
+            for passionId in passionIds:
+                passionId = int(passionId)
+                user.passions.add(Passion.objects.get(id=passionId)) 
             user.save()
         except IntegrityError:
             return render(request, "friendship/register.html", {
@@ -67,4 +70,7 @@ def register(request):
         login(request, user)
         return HttpResponseRedirect(reverse("index"))
     else:
-        return render(request, "friendship/register.html")
+        passions = Passion.objects.all()
+        return render(request, "friendship/register.html", {
+            "passions": passions
+        })

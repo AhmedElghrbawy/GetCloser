@@ -13,6 +13,9 @@ class User(AbstractUser):
 class Passion(models.Model):
     name = models.CharField(max_length=100)
 
+    def __str__(self):
+        return self.name
+
 class Request(models.Model):
     sender = models.ForeignKey(User, related_name="sentRequests", on_delete=models.CASCADE)
     to = models.ForeignKey(User, related_name="receivedRequests", on_delete=models.CASCADE)
