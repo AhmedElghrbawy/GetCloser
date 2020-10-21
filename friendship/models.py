@@ -43,3 +43,16 @@ class Request(models.Model):
 
     def __str__(self):
         return f"from {self.sender} to {self.to}"
+
+    def cancel(self):
+        print("cancel")
+        self.delete()
+    
+    def delete(self):
+        print("delete")
+        self.delete()
+
+    def confirm(self):
+        print("confirm")
+        self.sender.friends.add(self.to)
+        self.delete()

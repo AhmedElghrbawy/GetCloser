@@ -10,6 +10,9 @@ import json
 from django.http import JsonResponse
 
 def index(request):
+    if (not request.user.is_authenticated):
+        return HttpResponseRedirect(reverse("login"))
+
     return render(request, "friendship/index.html", {
         "users": map(lambda user: user.serialize(request.user), User.objects.all())
     })
@@ -87,6 +90,16 @@ def friendRequests(request):
 
 
     data = json.loads(request.body)
+
+    action = data['action']
+    id = int(data['viewdUserId'])
+
+    if (action == "add"):
+        req = Request(sender=request.user, to=User.objects.get(id=id))
+        req.save()
+        return JsonResponse({"info": f"request from {request.user.username} sent to {User.objects.get(id=id).username}"}, status=200)
+
+
 
     return JsonResponse(data, status=200)  
 
