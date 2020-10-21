@@ -7,9 +7,11 @@
             <div class="card" style="width: 18rem;" data-userId="{{user.id}}">
                 <img class="card-img-top" src="{{user.avatar}}" alt="Card image cap">
                 <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
+                <h5 class="card-title"> {{user.username}} </h5>
+                <p class="card-text">{{ user.briefBio }}</p>
+                {% for passion in user.passions %}
+                    <span class="badge badge-primary">{{passion.name}}</span>
+                {% endfor %}
                 </div>
             </div>
         {% endfor %}

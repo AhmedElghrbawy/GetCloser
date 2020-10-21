@@ -10,6 +10,22 @@ class User(AbstractUser):
     friends = models.ManyToManyField('self', blank=True)
 
 
+    @property
+    def briefBio(self):
+        bioList = self.bio.split(" ")
+        return " ".join(bioList[0:10]) + "..."
+
+    def serialize(self):
+        return {
+            "avatar": self.avatar,
+            "username": self.username,
+            "email": self.email,
+            "bio": self.bio,
+            "briefBio": self.briefBio,
+            "passions": map(lambda passion: {"name": passion.name, "id": passion.id}, self.passions.all()), 
+        }
+
+
 class Passion(models.Model):
     name = models.CharField(max_length=100)
 
