@@ -76,3 +76,18 @@ def register(request):
         return render(request, "friendship/register.html", {
             "passions": passions
         })
+
+@csrf_exempt
+@login_required
+def friendRequests(request):
+    if request.method != 'POST':
+        return JsonResponse({
+            "error": "POST request required."
+        }, status=400)
+
+
+    data = json.loads(request.body)
+
+    return JsonResponse(data, status=200)  
+
+

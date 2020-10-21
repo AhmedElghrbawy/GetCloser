@@ -17,6 +17,7 @@ class User(AbstractUser):
 
     def serialize(self, requestUser):
         return {
+            "id": self.id,
             "avatar": self.avatar,
             "username": self.username,
             "email": self.email,

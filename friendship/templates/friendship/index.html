@@ -16,13 +16,13 @@
                         {% if user.isFriend %}
                             <i class="fas fa-check-circle" title="Friends" style="color: green;"></i>
                         {% elif user.receivedRequest %}
-                             <a href="#" class="btn btn-danger">Cancel Request</a>
+                             <button  class="btn btn-danger" data-request-action="cancel">Cancel Request</button>
                         {% elif user.sentRequest %}
                             <p><strong> {{user.username}}</strong> sent you a friend request.</p>
-                             <a href="#" class="btn btn-success btn-sm">Confirm</a>
-                             <a href="#" class="btn btn-danger btn-sm">Delete</a>
+                             <button  class="btn btn-success btn-sm" data-request-action="confirm">Confirm</button>
+                             <button class="btn btn-danger btn-sm" data-request-action="delete">Delete</button>
                         {% else %}
-                             <a href="#" class="btn btn-primary">ِAdd Friend</a>
+                             <button class="btn btn-primary" data-request-action="add">ِAdd Friend</button>
                         {% endif %}
 
                     </div>
