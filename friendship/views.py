@@ -10,7 +10,9 @@ import json
 from django.http import JsonResponse
 
 def index(request):
-    return render(request, "friendship/index.html")
+    return render(request, "friendship/index.html", {
+        "users": User.objects.all()
+    })
 
 def login_view(request):
     if request.method == "POST":
