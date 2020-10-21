@@ -113,3 +113,9 @@ def friendRequests(request):
         req.delete()
 
     return JsonResponse(data, status=200)  
+
+def getProfile(request, id):
+    viewdUser = User.objects.get(id=id)
+    return render(request, 'friendship/profile.html', {
+        "viewdUser": viewdUser.serialize(request.user)
+    })

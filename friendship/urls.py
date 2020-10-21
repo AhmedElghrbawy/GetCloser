@@ -8,5 +8,6 @@ urlpatterns = [
     path("login", views.login_view, name="login"),
     path("logout", views.logout_view, name="logout"),
     path("register", views.register, name="register"),
-    path("friendRequests", views.friendRequests, name="friendRequests")
+    path("friendRequests", views.friendRequests, name="friendRequests"),
+    path("profile/<int:id>", views.getProfile, name="profile")
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

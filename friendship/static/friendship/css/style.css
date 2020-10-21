@@ -13,3 +13,7 @@
 .users-wrapper > * {
     margin: 20px;
 }
+
+.profile-info {
+    padding: 14px;
+}
