@@ -94,13 +94,22 @@ def friendRequests(request):
     action = data['action']
     id = int(data['viewdUserId'])
 
+    viewdUser = User.objects.get(id=id)
     if (action == "add"):
-        req = Request(sender=request.user, to=User.objects.get(id=id))
+        req = Request(sender=request.user, to=viewdUser)
         req.save()
-        return JsonResponse({"info": f"request from {request.user.username} sent to {User.objects.get(id=id).username}"}, status=200)
 
+    if (action == "remove"):
+        req = Request.objects.get(sender=viewdUser, to=request.user)
+        req.delete()
 
+    if (action == "confirm"):
+        viewdUser.friends.add(request.user)
+        req = Request.objects.get(sender=viewdUser, to=request.user)
+        req.delete()
+
+    if (action == "cancel"):
+        req = Request.objects.get(sender=request.user, to=viewdUser)
+        req.delete()
 
     return JsonResponse(data, status=200)  
-
-

@@ -13,18 +13,19 @@
                         <span class="badge badge-success">{{passion.name}}</span>
                     {% endfor %}
                     <div class="mt-5">
-                        {% if user.isFriend %}
-                            <i class="fas fa-check-circle" title="Friends" style="color: green;"></i>
-                        {% elif user.receivedRequest %}
-                             <button  class="btn btn-danger" data-request-action="cancel">Cancel Request</button>
-                        {% elif user.sentRequest %}
-                            <p><strong> {{user.username}}</strong> sent you a friend request.</p>
-                             <button  class="btn btn-success btn-sm" data-request-action="confirm">Confirm</button>
-                             <button class="btn btn-danger btn-sm" data-request-action="delete">Delete</button>
-                        {% else %}
-                             <button class="btn btn-primary" data-request-action="add">ِAdd Friend</button>
+                        {% if user.id != request.user.id %}
+                            {% if user.isFriend %}
+                                <i class="fas fa-check-circle" title="Friends" style="color: green;"></i>
+                            {% elif user.receivedRequest %}
+                                <button  class="btn btn-danger" data-request-action="cancel">Cancel Request</button>
+                            {% elif user.sentRequest %}
+                                <p><strong> {{user.username}}</strong> sent you a friend request.</p>
+                                <button  class="btn btn-success btn-sm" data-request-action="confirm">Confirm</button>
+                                <button class="btn btn-danger btn-sm" data-request-action="remove">remove</button>
+                            {% else %}
+                                <button class="btn btn-primary" data-request-action="add">ِAdd Friend</button>
+                            {% endif %}
                         {% endif %}
-
                     </div>
                 </div>
             </div>
