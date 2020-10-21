@@ -11,7 +11,7 @@ from django.http import JsonResponse
 
 def index(request):
     return render(request, "friendship/index.html", {
-        "users": map(lambda user: user.serialize(), User.objects.all())
+        "users": map(lambda user: user.serialize(request.user), User.objects.all())
     })
 
 def login_view(request):

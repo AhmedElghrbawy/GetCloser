@@ -15,15 +15,19 @@ class User(AbstractUser):
         bioList = self.bio.split(" ")
         return " ".join(bioList[0:10]) + "..."
 
-    def serialize(self):
+    def serialize(self, requestUser):
         return {
             "avatar": self.avatar,
             "username": self.username,
             "email": self.email,
             "bio": self.bio,
             "briefBio": self.briefBio,
-            "passions": map(lambda passion: {"name": passion.name, "id": passion.id}, self.passions.all()), 
+            "passions": map(lambda passion: {"name": passion.name, "id": passion.id}, self.passions.all()),
+            "isFriend": self.friends.filter(id=requestUser.id).exists(),
+            "receivedRequest": Request.objects.filter(to=self, sender=requestUser).exists(), # self received request from request.user
+            "sentRequest": Request.objects.filter(to=requestUser, sender=self).exists() # self sent request to request.user
         }
+    
 
 
 class Passion(models.Model):
@@ -35,3 +39,6 @@ class Passion(models.Model):
 class Request(models.Model):
     sender = models.ForeignKey(User, related_name="sentRequests", on_delete=models.CASCADE)
     to = models.ForeignKey(User, related_name="receivedRequests", on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"from {self.sender} to {self.to}"

@@ -4,14 +4,28 @@
 {% block body %}
     <div class="users-wrapper">
         {% for user in users %}
-            <div class="card" style="width: 18rem;" data-userId="{{user.id}}">
+            <div class="card border border-dark" style="width: 18rem;" data-userId="{{user.id}}" >
                 <img class="card-img-top" src="{{user.avatar}}" alt="Card image cap">
                 <div class="card-body">
-                <h5 class="card-title"> {{user.username}} </h5>
-                <p class="card-text">{{ user.briefBio }}</p>
-                {% for passion in user.passions %}
-                    <span class="badge badge-primary">{{passion.name}}</span>
-                {% endfor %}
+                    <h5 class="card-title"> {{user.username}} </h5>
+                    <p class="card-text">{{ user.briefBio }}</p>
+                    {% for passion in user.passions %}
+                        <span class="badge badge-success">{{passion.name}}</span>
+                    {% endfor %}
+                    <div class="mt-5">
+                        {% if user.isFriend %}
+                            <i class="fas fa-check-circle" title="Friends" style="color: green;"></i>
+                        {% elif user.receivedRequest %}
+                             <a href="#" class="btn btn-danger">Cancel Request</a>
+                        {% elif user.sentRequest %}
+                            <p><strong> {{user.username}}</strong> sent you a friend request.</p>
+                             <a href="#" class="btn btn-success btn-sm">Confirm</a>
+                             <a href="#" class="btn btn-danger btn-sm">Delete</a>
+                        {% else %}
+                             <a href="#" class="btn btn-primary">ِAdd Friend</a>
+                        {% endif %}
+
+                    </div>
                 </div>
             </div>
         {% endfor %}
