@@ -10,12 +10,18 @@ if (searchInput !== null) {
 }
 
 
-function toggleSearchResult(event) {
+async function toggleSearchResult(event) {
     const ul = document.getElementsByClassName('search-result')[0];
 
     if (event.target.value === "") {
         ul.innerHTML = "";
         return;
     }
-    ul.insertAdjacentHTML("beforeend", `<li class="list-group-item"> ${event.target.value}</li>`);
+    const name = event.target.value;
+    const response = await fetch(`/search?name=${name}`);
+
+    if (response.ok) {
+        const json = await response.json();
+        console.log(json);
+    }
 }

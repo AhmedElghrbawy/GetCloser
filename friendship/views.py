@@ -132,3 +132,15 @@ def requests(request):
     return render(request, "friendship/requests.html", {
         "users": senders
     })
+
+
+def search(request):
+    name = request.GET['name']
+    users = User.objects.filter(username__icontains=name)
+    response = {}
+    for user in users:
+        response[user.id] = {
+            'avatar': user.avatar.url,
+            'username': user.username,
+        }
+    return JsonResponse(dict(response), status=200)
