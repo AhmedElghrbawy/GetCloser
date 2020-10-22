@@ -2,10 +2,15 @@
 
 
 {% block body %}
+    {% block header %}
+    {% endblock %}
+    {% block title %}
+    {% endblock %}
+
     <div class="users-wrapper">
         {% for user in users %}
             <div class="card border border-dark" style="width: 18rem;" data-userId="{{user.id}}" >
-                <a href="{% url 'profile' user.id %}"><img class="card-img-top" src="{{user.avatar}}" alt="Card image cap"></a>
+                <a href="{% url 'profile' user.id %}"><img class="card-img-top" src="{{user.avatar.url}}" alt="Card image cap"></a>
                 <div class="card-body">
                     <h5 class="card-title"> {{user.username}} </h5>
                     <p class="card-text">{{ user.briefBio }}</p>

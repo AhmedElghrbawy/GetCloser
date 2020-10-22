@@ -117,7 +117,8 @@ def handleFriendRequests(request):
 def getProfile(request, id):
     viewdUser = User.objects.get(id=id)
     return render(request, 'friendship/profile.html', {
-        "viewdUser": viewdUser.serialize(request.user)
+        "viewdUser": viewdUser.serialize(request.user),
+        "users": [user.serialize(request.user) for user in viewdUser.friends.all()]
     })
 
 
