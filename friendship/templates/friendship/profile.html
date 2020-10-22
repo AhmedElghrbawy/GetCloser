@@ -14,7 +14,7 @@
                 {% for passion in viewdUser.passions %}
                         <span class="badge badge-success">{{passion.name}}</span>
                 {% endfor %}
-                <div class="mt-5" data-userId="{{viewdUser.id}}">
+                <div class="mt-5 request-control" data-userId="{{viewdUser.id}}" >
                     {% if viewdUser.id != request.user.id %}
                         {% if viewdUser.isFriend %}
                             <i class="fas fa-check-circle" title="Friends" style="color: green;"></i>

@@ -21,7 +21,16 @@ async function handleFriendRequest(event) {
 
     if (response.ok) {
         const json = await response.json();
-        location.reload();
+        const requestWrapper = event.target.closest(".request-control");
+        newControl = "";
+        if (action == "cancel" || action == "remove") {
+            newControl = `<button class="btn btn-primary" data-request-action="add">ِAdd Friend</button>`;
+        } else if (action == "confirm") {
+            newControl = `<i class="fas fa-check-circle" title="Friends" style="color: green;"></i>`;
+        } else if (action == "add") {
+            newControl = `<button  class="btn btn-danger" data-request-action="cancel">Cancel Request</button>`;
+        }
+        requestWrapper.innerHTML = newControl;
     }
 
 }

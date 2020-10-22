@@ -12,7 +12,7 @@
                     {% for passion in user.passions %}
                         <span class="badge badge-success">{{passion.name}}</span>
                     {% endfor %}
-                    <div class="mt-5">
+                    <div class="mt-5 request-control">
                         {% if user.id != request.user.id %}
                             {% if user.isFriend %}
                                 <i class="fas fa-check-circle" title="Friends" style="color: green;"></i>
