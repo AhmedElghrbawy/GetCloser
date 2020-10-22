@@ -34,11 +34,16 @@
     width: 300px;
 }
 
-.search-result-item {
+.search-result-item .mutual-item {
     display: flex;
 }
-.search-result-item  img {
+.search-result-item  img, .mutual-item img {
     width: 60px;
     height: 60px;
     margin-right: 10px;
+}
+
+.mutual-body {
+    display: flex;
+    flex-direction: column;
 }

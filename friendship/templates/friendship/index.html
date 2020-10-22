@@ -2,39 +2,78 @@
 
 
 {% block body %}
-    {% block header %}
-    {% endblock %}
-    {% block title %}
-    {% endblock %}
+{% block header %}
+{% endblock %}
+{% block title %}
+{% endblock %}
 
-    <div class="users-wrapper">
-        {% for user in users %}
-            <div class="card border border-dark" style="width: 18rem;" data-userId="{{user.id}}" >
-                <a href="{% url 'profile' user.id %}"><img class="card-img-top" src="{{user.avatar.url}}" alt="Card image cap"></a>
-                <div class="card-body">
-                    <h5 class="card-title"> {{user.username}} </h5>
-                    <p class="card-text">{{ user.briefBio }}</p>
-                    {% for passion in user.passions %}
-                        <span class="badge badge-success">{{passion.name}}</span>
-                    {% endfor %}
-                    <div class="mt-5 request-control">
-                        {% if user.id != request.user.id %}
-                            {% if user.isFriend %}
-                                <i class="fas fa-check-circle" title="Friends" style="color: green;"></i>
-                            {% elif user.receivedRequest %}
-                                <button  class="btn btn-danger" data-request-action="cancel">Cancel Request</button>
-                            {% elif user.sentRequest %}
-                                <p><strong> {{user.username}}</strong> sent you a friend request.</p>
-                                <button  class="btn btn-success btn-sm" data-request-action="confirm">Confirm</button>
-                                <button class="btn btn-danger btn-sm" data-request-action="remove">remove</button>
-                            {% else %}
-                                <button class="btn btn-primary" data-request-action="add">ِAdd Friend</button>
-                            {% endif %}
-                        {% endif %}
+<div class="users-wrapper">
+    {% for user in users %}
+    <div class="card border border-dark" style="width: 18rem;" data-userId="{{user.id}}">
+        <a href="{% url 'profile' user.id %}"><img class="card-img-top" src="{{user.avatar.url}}"
+                alt="Card image cap"></a>
+        <div class="card-body">
+            {% if user.id == request.user.id %}
+              <span class="badge badge-primary">You</span>
+            {% endif %}
+                <h5 class="card-title"> {{user.username}} </h5>
+              <p class="card-text">{{ user.briefBio }}</p>
+            {% for passion in user.passions %}
+                <span class="badge badge-success">{{passion.name}}</span>
+            {% endfor %}
+            <div class="mt-5 request-control">
+                {% if user.id != request.user.id %}
+                    {% if user.isFriend %}
+                        <i class="fas fa-check-circle" title="Friends" style="color: green;"></i>
+                    {% elif user.receivedRequest %}
+                        <button class="btn btn-danger" data-request-action="cancel">Cancel Request</button>
+                    {% elif user.sentRequest %}
+                        <p><strong> {{user.username}}</strong> sent you a friend request.</p>
+                        <button class="btn btn-success btn-sm" data-request-action="confirm">Confirm</button>
+                        <button class="btn btn-danger btn-sm" data-request-action="remove">remove</button>
+                    {% else %}
+                        <button class="btn btn-primary" data-request-action="add">ِAdd Friend</button>
+                    {% endif %}
+                {% endif %}
+                
+            </div>
+            
+            <!-- mutual friends -->
+            {% if user.id != request.user.id and user.numMutualFriends != 0 %}
+                <!-- Button trigger modal -->
+                <br>
+                <a data-toggle="modal" data-target="#exampleModal{{user.id}}" href="" class="mt-5">
+                    <strong>{{user.numMutualFriends}} </strong> Mutual Friends
+                </a>
+
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal{{user.id}}" tabindex="-1" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Mutual Friends with {{user.username}}</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body mutual-body">
+                                {% for mutualUser in user.mutualFriends %}
+                                <li class="list-group-item mutual-item">
+                                    <a href="/profile/{{mutualUser.id}}">
+                                      <img src="/{{mutualUser.avatar}}" alt="">
+                                    </a>
+                                    <strong>{{mutualUser.username}}</strong>
+                                </li>
+                                {% endfor %}
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        {% endfor %}
+                {% endif %}
+        </div>
     </div>
+    {% endfor %}
+</div>
 
 {% endblock %}

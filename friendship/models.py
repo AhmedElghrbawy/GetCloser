@@ -15,7 +15,21 @@ class User(AbstractUser):
         bioList = self.bio.split(" ")
         return " ".join(bioList[0:10]) + "..."
 
+    def getMutualFriends(self, user):
+        myFriends = {}
+        for friend in self.friends.all():
+            myFriends[friend.id] = friend
+        
+        mutualFriends = []
+        
+        for friend in user.friends.all():
+            if friend.id in myFriends:
+                mutualFriends.append(friend)
+        return mutualFriends
+
+
     def serialize(self, requestUser):
+        mutualFriends = self.getMutualFriends(requestUser)
         return {
             "id": self.id,
             "avatar": self.avatar,
@@ -26,7 +40,9 @@ class User(AbstractUser):
             "passions": map(lambda passion: {"name": passion.name, "id": passion.id}, self.passions.all()),
             "isFriend": self.friends.filter(id=requestUser.id).exists(),
             "receivedRequest": Request.objects.filter(to=self, sender=requestUser).exists(), # self received request from request.user
-            "sentRequest": Request.objects.filter(to=requestUser, sender=self).exists() # self sent request to request.user
+            "sentRequest": Request.objects.filter(to=requestUser, sender=self).exists(), # self sent request to request.user
+            "mutualFriends": mutualFriends,
+            "numMutualFriends": len(mutualFriends)
         }
     
 
