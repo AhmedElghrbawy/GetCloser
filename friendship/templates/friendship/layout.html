@@ -38,23 +38,19 @@
                         <a class="nav-link" href="{% url 'register' %}">Register</a>
                     </li>
                 {% endif %}
-            <!-- <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Dropdown
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Something else here</a>
-              </div>
-            </li> -->
             
           </ul>
-          <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-          </form>
+          {% if user.is_authenticated %}
+            <form class="form-inline my-2 my-lg-0 search-form">
+              <div class="search-wrapper wd-100">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search Users" aria-label="Search" id="search-input">
+                <ul class="list-group mr-sm-2 search-result">
+                  <!-- <li class="list-group-item">Cras justo odio</li> -->
+                  
+                </ul>
+              </div>
+            </form>
+          {% endif %}
         </div>
       </nav>
       {% block body %}
@@ -67,5 +63,6 @@
 
     <script src="https://kit.fontawesome.com/17c1561542.js" crossorigin="anonymous"></script>
     <script src="{% static 'friendship/script/friendRequests.js' %}"></script>
+    <script src="{% static 'friendship/script/search.js' %}"></script>
 </body>
 </html>

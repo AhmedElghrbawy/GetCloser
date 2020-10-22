@@ -17,3 +17,19 @@
 .profile-info {
     padding: 14px;
 }
+.search-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.search-wrapper > * {
+    width: 100%!important;
+}
+
+.search-result {
+    position: absolute;
+    z-index: 10;
+}
+.search-form {
+    width: 300px;
+}
