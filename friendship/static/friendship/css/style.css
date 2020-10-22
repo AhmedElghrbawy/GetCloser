@@ -33,3 +33,12 @@
 .search-form {
     width: 300px;
 }
+
+.search-result-item {
+    display: flex;
+}
+.search-result-item  img {
+    width: 60px;
+    height: 60px;
+    margin-right: 10px;
+}
