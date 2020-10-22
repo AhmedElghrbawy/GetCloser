@@ -82,7 +82,7 @@ def register(request):
 
 @csrf_exempt
 @login_required
-def friendRequests(request):
+def handleFriendRequests(request):
     if request.method != 'POST':
         return JsonResponse({
             "error": "POST request required."
@@ -118,4 +118,16 @@ def getProfile(request, id):
     viewdUser = User.objects.get(id=id)
     return render(request, 'friendship/profile.html', {
         "viewdUser": viewdUser.serialize(request.user)
+    })
+
+
+def requests(request):
+    '''
+    renders users who sent a friend request to current user
+    '''
+    currentUser = request.user
+    friendRequests = Request.objects.filter(to=currentUser)
+    senders = [friendRequest.sender.serialize(currentUser) for friendRequest in friendRequests]
+    return render(request, "friendship/requests.html", {
+        "users": senders
     })

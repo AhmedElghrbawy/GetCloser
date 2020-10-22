@@ -30,6 +30,13 @@ class User(AbstractUser):
         }
     
 
+    @property
+    def numRequests(self):
+        '''
+        number of friend requests sent to self
+        '''
+        return Request.objects.filter(to=self).count()
+
 
 class Passion(models.Model):
     name = models.CharField(max_length=100)

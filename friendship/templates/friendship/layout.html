@@ -23,7 +23,12 @@
                     <a class="nav-link" href="{% url 'profile' user.id %}">{{  user.username }} <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
+                        <a class="nav-link" href="{% url 'requests' %}">Requests
+                           <span class="badge badge-light">{{request.user.numRequests}}</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'logout' %}">Log Out </a>
                     </li>
                 {% else %}
                     <li class="nav-item">
