@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+import queue
 
 
 class User(AbstractUser):
@@ -26,6 +27,41 @@ class User(AbstractUser):
             if friend.id in myFriends:
                 mutualFriends.append(friend)
         return mutualFriends
+
+    def shortestConnection(self, requestUser):
+        '''
+        gets the shortest connection path between self and requestUser (BFS)
+        '''
+        parent = {} 
+        parent[self.id] = None
+        visited = set()
+        visited.add(self.id)
+        q = queue.Queue(User.objects.all().count())
+        q.put(self.id)
+        while not q.empty():
+            currentUser = User.objects.get(id=q.get())
+            if currentUser.id == requestUser.id:
+                break
+            for friend in currentUser.friends.all():
+                if not friend.id in visited:
+                    visited.add(friend.id)
+                    parent[friend.id] = currentUser.id
+                    q.put(friend.id)
+
+        path = []
+        if not requestUser.id in parent:
+            # print('no connection')
+            return path
+        self._buildPath(requestUser.id, parent, path)
+        path.reverse()
+        return path
+
+
+    def _buildPath(self, id, parent, path):
+        if parent[id] == None:
+            return
+        path.append(User.objects.get(id=id))
+        self._buildPath(parent[id], parent, path)
 
 
     def serialize(self, requestUser):
