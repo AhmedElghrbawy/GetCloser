@@ -45,7 +45,11 @@
 {% block footer %}
     {% if not viewdUser.isFriend and viewdUser.id != request.user.id %}
         <div class="connection-container">
-            <h4>Here is how you can get to know {{viewdUser.username}}.</h4>
+            {% if viewdUser.connectionLength != 0 %}
+                <h4>Here is how you can get to know {{viewdUser.username}}.</h4>
+            {% else %}
+                <h4>There is no link between you and {{ viewdUser.username }}, get to know more people.</h4>
+            {% endif %}
             <div class="connections-users">
                 {% for user in viewdUser.shortestConnection %}
                     <a href="{% url 'profile' user.id %}"><img src="/{{user.avatar}}" class="rounded-circle" alt="Cinque Terre" title="{{user.username}}">

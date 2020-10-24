@@ -66,6 +66,7 @@ class User(AbstractUser):
 
     def serialize(self, requestUser):
         mutualFriends = self.getMutualFriends(requestUser)
+        shortestConnection = requestUser.shortestConnection(self)
         return {
             "id": self.id,
             "avatar": self.avatar,
@@ -79,7 +80,8 @@ class User(AbstractUser):
             "sentRequest": Request.objects.filter(to=requestUser, sender=self).exists(), # self sent request to request.user
             "mutualFriends": mutualFriends,
             "numMutualFriends": len(mutualFriends),
-            "shortestConnection": requestUser.shortestConnection(self)
+            "shortestConnection": shortestConnection,
+            "connectionLength": len(shortestConnection)
         }
     
 
