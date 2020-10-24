@@ -78,7 +78,8 @@ class User(AbstractUser):
             "receivedRequest": Request.objects.filter(to=self, sender=requestUser).exists(), # self received request from request.user
             "sentRequest": Request.objects.filter(to=requestUser, sender=self).exists(), # self sent request to request.user
             "mutualFriends": mutualFriends,
-            "numMutualFriends": len(mutualFriends)
+            "numMutualFriends": len(mutualFriends),
+            "shortestConnection": requestUser.shortestConnection(self)
         }
     
 

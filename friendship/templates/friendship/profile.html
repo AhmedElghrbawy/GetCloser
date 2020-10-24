@@ -41,3 +41,19 @@
 {% block title %}
     <h1 class="ml-5 mt-5">Friends</h1>
 {% endblock %}
+
+{% block footer %}
+    {% if not viewdUser.isFriend and viewdUser.id != request.user.id %}
+        <div class="connection-container">
+            <h4>Here is how you can get to know {{viewdUser.username}}.</h4>
+            <div class="connections-users">
+                {% for user in viewdUser.shortestConnection %}
+                    <a href="{% url 'profile' user.id %}"><img src="/{{user.avatar}}" class="rounded-circle" alt="Cinque Terre" title="{{user.username}}">
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+
+
+{% endblock %}

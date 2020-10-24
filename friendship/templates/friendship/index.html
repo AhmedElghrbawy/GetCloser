@@ -2,10 +2,10 @@
 
 
 {% block body %}
-{% block header %}
-{% endblock %}
-{% block title %}
-{% endblock %}
+    {% block header %}
+    {% endblock %}
+    {% block title %}
+    {% endblock %}
 
 <div class="users-wrapper">
     {% for user in users %}
@@ -76,4 +76,8 @@
     {% endfor %}
 </div>
 
+    {% block footer %}
+
+    {% endblock %}
 {% endblock %}
+
