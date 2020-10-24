@@ -48,7 +48,9 @@
             {% if viewdUser.connectionLength != 0 %}
                 <h4>Here is how you can get to know {{viewdUser.username}}.</h4>
             {% else %}
-                <h4>There is no link between you and {{ viewdUser.username }}, get to know more people.</h4>
+                <h4>There is no link between you and {{ viewdUser.username }}, get to know more people
+                    <a href="{% url 'index' %}">Home</a>.
+                </h4>
             {% endif %}
             <div class="connections-users">
                 {% for user in viewdUser.shortestConnection %}
